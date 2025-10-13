@@ -13767,7 +13767,9 @@ const changeModalState = state => {
     windowWidth = document.querySelectorAll('#width'),
     windowHeight = document.querySelectorAll('#height'),
     windowType = document.querySelectorAll('#view_type'),
-    windowProfile = document.querySelectorAll('.checkbox');
+    windowProfile = document.querySelectorAll('.checkbox'),
+    nextBtn = document.querySelector('[data-btnNext]'),
+    nextBtnProfile = document.querySelector('.popup_calc_profile_button');
   (0,_chekNumInputs__WEBPACK_IMPORTED_MODULE_0__["default"])('#width');
   (0,_chekNumInputs__WEBPACK_IMPORTED_MODULE_0__["default"])('#height');
   function bindActionToElements(event, elem, prop) {
@@ -13792,6 +13794,9 @@ const changeModalState = state => {
             state[prop] = item.value;
             break;
         }
+        ;
+        checkRequiredFields(windowWidth[0]?.value?.trim() !== '', windowHeight[0]?.value?.trim() !== '');
+        checkRequiredFieldsBox(windowProfile[0].checked, windowProfile[1].checked);
         console.log(state);
       });
     });
@@ -13802,6 +13807,25 @@ const changeModalState = state => {
   bindActionToElements('input', windowHeight, 'height');
   bindActionToElements('change', windowType, 'type');
   bindActionToElements('change', windowProfile, 'profile');
+  function checkRequiredFields(argum1, argum2) {
+    if (argum1 && argum2) {
+      nextBtn.removeAttribute('disabled');
+      nextBtn.classList.remove('disabled');
+    } else {
+      nextBtn.setAttribute('disabled', true);
+      nextBtn.classList.add('disabled');
+    }
+  }
+  function checkRequiredFieldsBox(argum1, argum2) {
+    if (argum1 || argum2) {
+      nextBtnProfile.removeAttribute('disabled');
+      nextBtnProfile.classList.remove('disabled');
+    } else {
+      nextBtnProfile.setAttribute('disabled', true);
+      nextBtnProfile.classList.add('disabled');
+    }
+  }
+  checkRequiredFields();
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (changeModalState);
 
@@ -13931,6 +13955,15 @@ const modals = () => {
         if (e.target) {
           e.preventDefault();
         }
+
+        /*  if(e.target == btn && (windowWidth === undefined || windowHeight === undefined) ) {
+             
+             document.querySelector('.status').textContent = message.size;
+               let statusMessage = document.createElement('div');
+             statusMessage.classList.add('status');
+             item.appendChild(statusMessage);
+         }
+        */
         windows.forEach(item => {
           item.style.display = 'none';
         });

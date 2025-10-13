@@ -15,11 +15,23 @@ const modals = () => {
         failure: 'Что-то пошло не так...'
     };
 
+    
+
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
                 if (e.target) {
                     e.preventDefault();
-                }    
+                }
+
+               /*  if(e.target == btn && (windowWidth === undefined || windowHeight === undefined) ) {
+                    
+                    document.querySelector('.status').textContent = message.size;
+
+                    let statusMessage = document.createElement('div');
+                    statusMessage.classList.add('status');
+                    item.appendChild(statusMessage);
+                }
+     */
                  windows.forEach(item => {
                     item.style.display = 'none';
                 });

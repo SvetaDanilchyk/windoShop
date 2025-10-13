@@ -5,13 +5,15 @@ const changeModalState = (state) => {
           windowWidth = document.querySelectorAll('#width'),
           windowHeight = document.querySelectorAll('#height'),
           windowType = document.querySelectorAll('#view_type'),
-          windowProfile = document.querySelectorAll('.checkbox');
+          windowProfile = document.querySelectorAll('.checkbox'),
+          nextBtn = document.querySelector('[data-btnNext]'),
+          nextBtnProfile = document.querySelector('.popup_calc_profile_button');
 
           chekNumInputs('#width');
           chekNumInputs('#height');
 
+       
         function bindActionToElements(event, elem, prop)  {
-
             elem.forEach((item, i) => {
 
                 item.addEventListener(event, () => {
@@ -35,7 +37,10 @@ const changeModalState = (state) => {
                     case"SELECT":                        
                         state[prop] = item.value;
                         break;
-                }  
+                };  
+
+                    checkRequiredFields(windowWidth[0]?.value?.trim() !== '', windowHeight[0]?.value?.trim() !== '');
+                    checkRequiredFieldsBox(windowProfile[0].checked, windowProfile[1].checked);
                     console.log(state);
 
                 });
@@ -51,6 +56,31 @@ const changeModalState = (state) => {
           bindActionToElements('input', windowHeight, 'height');
           bindActionToElements('change', windowType, 'type');
           bindActionToElements('change', windowProfile, 'profile');
+
+function checkRequiredFields(argum1, argum2) {
+
+
+    if ( argum1 && argum2 ) {
+        nextBtn.removeAttribute('disabled');
+        nextBtn.classList.remove('disabled');
+    } else {
+        nextBtn.setAttribute('disabled', true);
+        nextBtn.classList.add('disabled');
+    }
+}
+
+function checkRequiredFieldsBox(argum1, argum2) {
+
+
+    if ( argum1 || argum2 ) {
+        nextBtnProfile.removeAttribute('disabled');
+        nextBtnProfile.classList.remove('disabled');
+    } else {
+        nextBtnProfile.setAttribute('disabled', true);
+        nextBtnProfile.classList.add('disabled');
+    }
+}
+        checkRequiredFields();
 
 };
 
